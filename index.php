@@ -3,6 +3,15 @@
         Predis\Autoloader::register();
         $current_agent = $_SERVER['HTTP_USER_AGENT'];
         $selected_usragent = $_POST['useragent'];
+        $useragent_touse = "";
+        
+        if (isset($selected_usragent)) {
+            $useragent_touse == $selected_usragent;
+        }
+        else {
+            $useragent_touse == $current_agent;
+        }
+
         try {
                 $client = new Predis\Client();
                 $client->incr($current_agent);
@@ -31,25 +40,21 @@
             <form method="post">
                 <label for="useragent">Please choose user agent string you want to get statistics for: </label>
                 <select id="useragent" name="useragent" onchange="this.form.submit()">
-                        <?php
-                            $allusragents = $client->keys('*');
-                            foreach($allusragents as $item) {
-                                if ($item == $selected_usragent) {
-                                        echo "<option value='$item' selected>$item</option>";
-                                        $count = $client->get($selected_usragent);
-                                }
-                                elseif ($item == $current_agent) {
-                                        echo "<option value='$item' selected>$item</option>";
-                                        $count = $client->get($current_agent);
-                                }
-                                else {
-                                        echo "<option value='$item'>$item</option>";
-                                }
+                    <?php
+                        $allusragents = $client->keys('*');
+                        foreach($allusragents as $item) {
+                            if ($item == $useragent_touse) {
+                                    echo "<option value='$item' selected>$item</option>";
+                                    $count = $client->get($useragent_touse);
                             }
-                        ?>
+                            else {
+                                    echo "<option value='$item'>$item</option>";
+                            }
+                        }
+                    ?>
                 </select>
             </form>
-            <p>Now showing statistics for user agent: <?php echo $selected_usragent; ?></p>
+            <p>Now showing statistics for user agent: <?php echo $useragent_touse; ?></p>
             <p>This user agent has been encountered on this website this many times: <?php echo $count; ?></p>
         </div>
     </body>
