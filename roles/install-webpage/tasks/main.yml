@@ -1,8 +1,15 @@
 ---
 
 - block:
+  - name: Check if default inde.html is present
+    stat:
+      path: /usr/share/nginx/html/index.html
+    register: stat_result
+
   - name: Remove default website
     command: mv /usr/share/nginx/html/index.html /usr/share/nginx/html/index.html.bak  
+    when: stat_result.stat.exists == True
+  
   - name: Install new default website (redis + php)
     copy:
       src: /home/tomass/ansible/index.php
