@@ -5,5 +5,13 @@
     yum:
       name: ['php', 'php-fpm', 'php-nrk-Predis']
       state: present
+  - name: Enable php-fpm service
+    service:
+      name: php-fpm
+      enabled: yes
+  - name: Start php-fpm service
+    service:
+      name: php-fpm
+      state: started
   become: true
   become_method: sudo
