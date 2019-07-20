@@ -1,7 +1,7 @@
 ---
 
 - block:
-  -name: Make sure index line is absent
+  - name: Make sure index line is absent
     lineinfile:
       path: /etc/nginx/nginx.conf
       regexp: '^            index  index.php index.html index.htm;'
