@@ -2,6 +2,7 @@
         require "/usr/share/pear/Predis/Autoloader.php";
         Predis\Autoloader::register();
         $current_agent = $_SERVER['HTTP_USER_AGENT'];
+        $selected_usragent = $_POST['useragent'];
         try {
                 $client = new Predis\Client();
                 $client->incr($current_agent);
@@ -25,17 +26,31 @@
         <p>Welcome my homework webpage</p>
         <p>This page is meant to to show your browser's user agent string.</p>
         <p>Also, you will find a drop down list of user agent strings of users who have visited this website and how many times that user string was encountered.</p>
-        <p>So you user agent string is: <?php echo $current_agent; ?></p>
+        <p>Your user agent string is: <?php echo $current_agent; ?></p>
         <div>
-            <label for="useragent">Please choose user agent string</label>
-            <select id="useragent" name="useragent">
-                <?php
-                    $allusragents = $client->keys('*');
-                    foreach($allusragents as $item) {
-                        echo "<option value='$item'>$item</option>";
-                    }
-                ?>
-            </select>
+            <form method="post">
+                <label for="useragent">Please choose user agent string you want to get statistics for: </label>
+                <select id="useragent" name="useragent" onchange="this.form.submit()">
+                        <?php
+                            $allusragents = $client->keys('*');
+                            foreach($allusragents as $item) {
+                                if ($item == $selected_usragent) {
+                                        echo "<option value='$item' selected>$item</option>";
+                                        $count = $client->get($selected_usragent);
+                                }
+                                elseif ($item == $current_agent) {
+                                        echo "<option value='$item' selected>$item</option>";
+                                        $count = $client->get($current_agent);
+                                }
+                                else {
+                                        echo "<option value='$item'>$item</option>";
+                                }
+                            }
+                        ?>
+                </select>
+            </form>
+            <p>Now showing statistics for user agent: <?php echo $selected_usragent; ?></p>
+            <p>This user agent has been encountered on this website this many times: <?php echo $count; ?></p>
         </div>
     </body>
 </html>
