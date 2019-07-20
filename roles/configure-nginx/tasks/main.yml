@@ -1,11 +1,16 @@
 ---
 
 - block:
+  -name: Make sure index line is absent
+    lineinfile:
+      path: /etc/nginx/nginx.conf
+      regexp: '^            index  index.php index.html index.htm;'
+      state: absent
   - name: Enable index.php on nginx default web server
     lineinfile:
       path: /etc/nginx/nginx.conf
       line: '            index  index.php index.html index.htm;'
-      insertafter: '        location'
+      insertafter: '^        location'
       firstmatch: yes
   - name: Enable php parsing on default web server
     blockinfile:
@@ -20,7 +25,7 @@
                             include         fastcgi_params;
                       }
             
-      insertbefore: '        error_page 404 /404.html;'
+      insertbefore: '^        error_page 404 /404.html;'
       backup: yes
   - name: Restart nginx
     service:
