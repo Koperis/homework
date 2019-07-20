@@ -1,0 +1,86 @@
+---
+
+- name: Create resource group
+  azure_rm_resourcegroup:
+    name: solution-srvRG
+    location: westeurope
+
+- name: Create virtual network
+  azure_rm_virtualnetwork:
+    resource_group: solution-srvRG
+    name: solution-srvVnet
+    address_prefixes: "10.0.0.0/16"
+
+- name: Add subnet
+  azure_rm_subnet:
+    resource_group: solution-srvRG
+    name: solution-srvSubnet
+    address_prefix: "10.0.1.0/24"
+    virtual_network: solution-srvVnet
+
+- name: Create public IP address
+  azure_rm_publicipaddress:
+    resource_group: solution-srvRG
+    allocation_method: Static
+    name: solution-srvPIP
+  register: output_ip_address
+
+- name: Show public IP address for the VM
+  debug:
+    msg: "The public IP is {{ output_ip_address.state.ip_address }}."
+
+- name: Register public IP for the VM
+  replace:
+    path: "/home/tomass/ansible/hosts"
+    regexp: '__token__'
+    replace: '{{ output_ip_address.state.ip_address }}'
+
+- name: Create Network Security Group that allows SSH
+  azure_rm_securitygroup:
+    resource_group: solution-srvRG
+    name: solution-srvNSG
+    rules:
+    - name: SSH
+      protocol: Tcp
+      destination_port_range: 22
+      access: Allow
+      priority: 1001
+      direction: Inbound
+    - name: www
+      protocol: Tcp
+      destination_port_range: 80
+      access: Allow
+      priority: 1002
+      direction: Inbound
+    - name: https
+      protocol: Tcp
+      destination_port_range: 443
+      access: Allow
+      priority: 1003
+      direction: Inbound
+
+- name: Create virtual network interface card
+  azure_rm_networkinterface:
+    resource_group: solution-srvRG
+    name: solution-srvNIC
+    virtual_network: solution-srvVnet
+    subnet: solution-srvSubnet
+    public_ip_name: solution-srvPIP
+    security_group: solution-srvNSG
+
+- name: Create VM
+  azure_rm_virtualmachine:
+    resource_group: solution-srvRG
+    name: solution-srvVM
+    vm_size: Standard_DS1_v2
+    admin_username: tomass
+    ssh_password_enabled: false
+    ssh_public_keys:
+      - path: /home/tomass/.ssh/authorized_keys
+        key_data: "{{ lookup('file', '/home/tomass/ssh_key.pub') }}"
+    network_interfaces: solution-srvNIC
+    image:
+      offer: CentOS
+      publisher: OpenLogic
+      sku: '7.5'
+      version: latest
