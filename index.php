@@ -6,10 +6,10 @@
         $useragent_touse = "";
         
         if (isset($selected_usragent)) {
-            $useragent_touse === $selected_usragent;
+            $useragent_touse = $selected_usragent;
         }
         else {
-            $useragent_touse === $current_agent;
+            $useragent_touse = $current_agent;
         }
 
         try {
@@ -43,7 +43,7 @@
                     <?php
                         $allusragents = $client->keys('*');
                         foreach($allusragents as $item) {
-                            if ($item == $useragent_touse) {
+                            if ($item === $useragent_touse) {
                                     echo "<option value='$item' selected>$item</option>";
                                     $count = $client->get($useragent_touse);
                             }
