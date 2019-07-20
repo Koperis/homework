@@ -1,0 +1,14 @@
+---
+
+- block:
+  - name: Install PHP and it's dependencies
+    yum:
+      name: {{ item }}
+      state: present
+    with_items:
+      - php
+      - php-fpm
+      - php-fpm-nginx
+      - php-nrk-Predis
+  become: true
+  become_method: sudo
