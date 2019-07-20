@@ -7,20 +7,25 @@
       line: '            index  index.php index.html index.htm;'
       insertafter: 'location'
       firstmatch: yes
+      backrefs: yes
   - name: Enable php parsing on default web server
     blockinfile:
       path: /etc/nginx/nginx.conf
       block: |
-            location ~ \.php$ {
-                try_files $uri  = 404;
-                fastcgi_pass    127.0.0.1:9000;
-                fastcgi_index   index.php;
-                fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
-                fastcgi_param   SCRIPT_NAME $fastcgi_script_name;
-                include         fastcgi_params;
-            }
-            
-      insertbefore: "error_page 404"
+            '            location ~ \.php$ {
+                              try_files $uri  = 404;
+                              fastcgi_pass    127.0.0.1:9000;
+                              fastcgi_index   index.php;
+                              fastcgi_param   SCRIPT_FILENAME $document_root$fastcgi_script_name;
+                              fastcgi_param   SCRIPT_NAME $fastcgi_script_name;
+                              include         fastcgi_params;
+                        }
+            '
+      insertafter: "include /etc/nginx"
       backup: yes
+  - name: Restart nginx
+    service:
+      name: nginx
+      state: restarted
   become: true
   become_method: sudo
