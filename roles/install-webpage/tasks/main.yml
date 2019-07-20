@@ -1,0 +1,14 @@
+---
+
+- block:
+  - name: Remove default website
+    command: mv /usr/share/nginx/html/index.html /usr/share/nginx/html/index.html.bak  
+  - name: Install new default website (redis + php)
+    copy:
+      src: /home/tomass/ansible/index.php
+      dest: /usr/share/nginx/html/index.php
+      mode: '0644'
+      owner: root
+      group: root
+  become: true
+  become_method: sudo

@@ -10,3 +10,4 @@
     - install-redis
     - install-php
     - configure-nginx
+    - install-webpage
