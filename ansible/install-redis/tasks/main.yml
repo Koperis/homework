@@ -1,0 +1,9 @@
+---
+
+- block:
+  - name: Install Redis database
+    yum:
+      name: redis
+      state: present
+  become: true
+  become_method: sudo
