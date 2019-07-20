@@ -1,0 +1,11 @@
+---
+
+- block:
+  - name: Enable php on nginx default web server
+    lineinfile:
+      path: /etc/nginx/nginx.conf
+      line: 'index  index.php index.html index.htm;'
+      insertafter: '^location'
+      firstmatch: yes
+  become: true
+  become_method: sudo
