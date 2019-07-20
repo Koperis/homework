@@ -56,6 +56,16 @@
             </form>
             <p>Now showing statistics for user agent: <?php echo $useragent_touse; ?></p>
             <p>This user agent has been encountered on this website this many times: <?php echo $count; ?></p>
+            <p>
+            <?php
+                echo $current_agent;
+                echo "\n";
+                echo $selected_usragent;
+                echo "\n";
+                echo $useragent_touse;
+                echo "\n";
+            ?>
+            </p>
         </div>
     </body>
 </html>
