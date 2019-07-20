@@ -6,10 +6,10 @@
         $useragent_touse = "";
         
         if (isset($selected_usragent)) {
-            $useragent_touse == $selected_usragent;
+            $useragent_touse === $selected_usragent;
         }
         else {
-            $useragent_touse == $current_agent;
+            $useragent_touse === $current_agent;
         }
 
         try {
