@@ -1,9 +1,17 @@
 ---
 
 - block:
-  - name: Install Redis database
+  - name: Install Redis database server
     yum:
       name: redis
       state: present
+  - name: Enable Redis service
+    service:
+      name: redis
+      enabled: yes
+  - name: Start Redis service
+    service:
+      name: redis
+      state: started
   become: true
   become_method: sudo
