@@ -7,7 +7,6 @@
       line: '            index  index.php index.html index.htm;'
       insertafter: 'location'
       firstmatch: yes
-      backrefs: yes
   - name: Enable php parsing on default web server
     blockinfile:
       path: /etc/nginx/nginx.conf
