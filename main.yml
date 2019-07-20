@@ -9,3 +9,4 @@
     - install-nginx
     - install-redis
     - install-php
+    - configure-nginx
