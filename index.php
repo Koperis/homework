@@ -21,7 +21,7 @@
         }
 ?>
 
-<DOCTYPE>
+<DOCTYPE html>
 <html>
     <head>
         <title>Homework webpage</title>
