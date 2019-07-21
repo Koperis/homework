@@ -1,0 +1,4 @@
+- name: Create the solution machine in Azure
+  hosts: localhost
+  roles:
+    - build-solutionserver
