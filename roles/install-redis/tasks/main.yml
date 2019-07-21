@@ -13,5 +13,7 @@
     service:
       name: redis
       state: started
+  - name: Enable webserver to connect to localhost where redis lives
+    command: /usr/sbin/setsebool -P httpd_can_network_connect on
   become: true
   become_method: sudo
