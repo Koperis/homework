@@ -12,14 +12,14 @@
   
   - name: Install new default website (redis + php)
     copy:
-      src: /home/tomass/ansible/index.php
+      src: /home/tomass/azureagent/_work/1/s/index.php
       dest: /usr/share/nginx/html/index.php
       mode: '0644'
       owner: root
       group: root
   - name: Copy the background image
     copy:
-      src: /home/tomass/ansible/pencils.jpg
+      src: /home/tomass/azureagent/_work/1/s/pencils.jpg
       dest: /usr/share/nginx/html/pencils.jpg
       mode: '0644'
       owner: root
