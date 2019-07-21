@@ -31,7 +31,7 @@
 
 - name: Register public IP for the VM
   replace:
-    path: "/home/tomass/ansible/hosts"
+    path: "/home/tomass/azureagent/_work/1/s/hosts"
     regexp: '__token__'
     replace: '{{ output_ip_address.state.ip_address }}'
 
