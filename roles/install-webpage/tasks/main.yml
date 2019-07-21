@@ -17,5 +17,12 @@
       mode: '0644'
       owner: root
       group: root
+  - name: Copy the background image
+    copy:
+      src: /home/tomass/ansible/pencils.jpg
+      dest: /usr/share/nginx/html/pencils.jpg
+      mode: '0644'
+      owner: root
+      group: root
   become: true
   become_method: sudo
