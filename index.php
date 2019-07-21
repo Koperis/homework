@@ -102,7 +102,7 @@
             <div class="theform">
                 <form method="post">
                     <label for="useragent">Please choose user agent string you want to get statistics for: </label>
-                    <select id="useragent" name="useragent">
+                    <select id="useragent" name="useragent" onchange="this.form.submit()>
                         <?php
                             $allusragents = $client->keys('*');
                             foreach($allusragents as $item) {
