@@ -92,7 +92,7 @@
                     <li>All the code lives in this repo: <a href="https://github.com/Koperis/homework">Github</a></li>
                     <li>Also, same code lives in my personal git repo in Azure DevOps services</li>
                     <li>When I do a code change it gets pushed to both repos and Azure DevOps CI pipeline gets kicked off. There is one thing to have in mind for this step - when the pipeline runs for the first time the target machine does not exist yet so the pipeline builds the machine, gets its IP address and updates the hosts file (replaces __token__).</li>
-                    <li>A dedicated server (a build machine in azure cloud) fetches the code (ansible playbooks and the index.php)</li>
+                    <li>A dedicated server (a build machine in azure cloud where the Azure DevOps agent lives) fetches the code (ansible playbooks and the index.php)</li>
                     <li>Ansible builds a dedicated server which is used to host this webpage. The server is built in azure cloud. Server OS is CentOS linux.</li>
                     <li>Ansible installs nginx and redis database and all their dependencies.</li>
                     <li>Ansible configures nginx to host php webpage</li>
