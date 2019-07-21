@@ -89,7 +89,7 @@
             <div class="description">
                 <p>This webpage was built as a homework assignment. These were the steps to build it:</p>
                 <ul>
-                    <li>All the code lives in this repo: </li>
+                    <li>All the code lives in this repo: <a href="https://github.com/Koperis/homework">Github</a></li>
                     <li>A dedicated server (a build machine in azure cloud) fetches the code (ansible playbooks and the index.php)</li>
                     <li>Ansible builds a dedicated server which is used to host this webpage. The server is built in azure cloud. Server OS is CentOS linux.</li>
                     <li>Ansible installs nginx and redis database and all their dependencies.</li>
