@@ -16,4 +16,4 @@ steps:
 - task: Bash@3
   inputs:
     targetType: 'inline'
-    script: '/usr/bin/ansible main.yml -i hosts'
+    script: '/usr/bin/ansible-playbook main.yml -i hosts'
